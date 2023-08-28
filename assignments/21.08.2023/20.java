@@ -1,36 +1,61 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
 
-public class Solution {
-    public List<String> generateParenthesis(int n) {
-        List<String> result = new ArrayList<>();
-        backtrack(result, new StringBuilder(), n, n);
-        return result;
-    }
-
-    private void backtrack(List<String> result, StringBuilder current, int open, int close) {
-        if (open == 0 && close == 0) {
-            result.add(current.toString());
-            return;
-        }
-        if (open > 0) {
-            current.append("(");
-            backtrack(result, current, open - 1, close);
-            current.deleteCharAt(current.length() - 1);
-        }
-        if (close > open) {
-            current.append(")");
-            backtrack(result, current, open, close - 1);
-            current.deleteCharAt(current.length() - 1);
-        }
-    }
-
+public class MatrixFactorization {
     public static void main(String[] args) {
-        Solution solution = new Solution();
-        int n = 3;
-        List<String> combinations = solution.generateParenthesis(n);
-        for (String combination : combinations) {
-            System.out.println(combination);
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the size of the matrix (n): ");
+        int n = scanner.nextInt();
+
+        System.out.println("Enter the matrix elements row by row:");
+        double[][] A = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                A[i][j] = scanner.nextDouble();
+            }
         }
+
+        scanner.close();
+
+        if (isInvertible(A)) {
+            double[][] identity = new double[n][n];
+            for (int i = 0; i < n; i++) {
+                identity[i][i] = 1;
+            }
+
+            System.out.println("Matrix A is invertible. Performing factorization into elementary matrices:");
+            double[][][] elementaryMatrices = factorizeIntoElementaryMatrices(A, identity);
+
+            for (int i = 0; i < elementaryMatrices.length; i++) {
+                System.out.println("Elementary Matrix " + (i + 1) + ":");
+                printMatrix(elementaryMatrices[i]);
+            }
+        } else {
+            System.out.println("Matrix A is not invertible.");
+        }
+    }
+
+    public static boolean isInvertible(double[][] matrix) {
+        // Check if matrix is invertible (e.g., using determinant or other methods)
+        // Return true if invertible, false otherwise
+        // Implement your logic here
+        return true; // Replace with actual logic
+    }
+
+    public static double[][][] factorizeIntoElementaryMatrices(double[][] A, double[][] identity) {
+        // Perform factorization into elementary matrices using your method of choice
+        // Return an array of elementary matrices
+        // Implement your logic here
+        return new double[][][]{}; // Replace with actual logic
+    }
+
+    public static void printMatrix(double[][] matrix) {
+        for (double[] row : matrix) {
+            for (double value : row) {
+                System.out.print(value + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 }
